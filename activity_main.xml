@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/main_btn_close_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="close the Countdown"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/main_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="add a Countdown" />
+
+    <TextView
+        android:id="@+id/main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:padding="10dp"
+        android:text="00:00"
+	    android:textColor="#ffffffff"
+
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/main_btn_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_tv"
+        android:layout_marginRight="23dp"
+        android:layout_toLeftOf="@+id/main_tv"
+        android:text="-"
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/main_btn_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_tv"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@+id/main_tv"
+        android:text="+"
+        android:textSize="40dp" />
+
+ 
+</RelativeLayout>
