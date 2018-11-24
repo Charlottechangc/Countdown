@@ -1,0 +1,127 @@
+package com.example.timer;
+
+import android.R.string;
+import android.app.Activity; 
+import android.media.MediaPlayer; 
+import android.os.Bundle; 
+import android.os.CountDownTimer; 
+import android.view.View; 
+import android.view.View.OnClickListener; 
+import android.widget.Button; 
+import android.widget.TextView; 
+  
+public class MainActivity extends Activity implements OnClickListener { 
+  private Button addTimeBtn; 
+  private Button decreaseTimeBtn; 
+  private Button startBtn; 
+  private Button closeMusicBtn; 
+  private TextView timeText; 
+
+  public String aaa;
+  private int brewTime = 60; 
+  private CountDownTimer countDownTimer; 
+  private boolean isBrewing = false; 
+  private MediaPlayer alarmMusic; 
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) { 
+    super.onCreate(savedInstanceState); 
+    setContentView(R.layout.activity_main); 
+  
+    addTimeBtn = (Button) findViewById(R.id.main_btn_up); 
+    decreaseTimeBtn = (Button) findViewById(R.id.main_btn_down); 
+    startBtn = (Button) findViewById(R.id.main_start); 
+    closeMusicBtn = (Button) findViewById(R.id.main_btn_close_music); 
+    timeText = (TextView) findViewById(R.id.main_tv); 
+    addTimeBtn.setOnClickListener(this); 
+    decreaseTimeBtn.setOnClickListener(this); 
+    startBtn.setOnClickListener(this); 
+    closeMusicBtn.setOnClickListener(this); 
+    setBrewTime(60); 
+  } 
+  
+  /** 
+   * set initial value of the Countdown
+   * 
+   * @param minutes 
+   */
+  public void setBrewTime(int minutes) { 
+    if (isBrewing) 
+      return; 
+    brewTime = minutes; 
+  
+    if (brewTime < 1) { 
+      brewTime = 1; 
+    } 
+    timeText.setText(String.valueOf(brewTime) + "s"); 
+  } 
+  
+  /** 
+   * start the Countdown 
+   */
+  public void startBrew() { 
+    // create a CountDownTimer object to record time of the Countdown 
+    countDownTimer = new CountDownTimer(brewTime *  1000, 1000) { 
+      @Override
+      public void onTick(long millisUntilFinished) { 
+        timeText.setText(String.valueOf(millisUntilFinished / 1000) 
+            + "s"); 
+        
+     
+        aaa=String.valueOf(millisUntilFinished / 1000);
+      } 
+  
+      @Override
+      public void onFinish() { 
+        isBrewing = false; 
+        brewTime=60;
+        timeText.setText(brewTime + "s"); 
+        startBtn.setText("add a Countdown"); 
+        // load the appointed music and create MediaPlayer object for it
+        alarmMusic = MediaPlayer.create(MainActivity.this, R.raw.music); 
+        // set to cycleplay 
+        alarmMusic.setLooping(true); 
+        // start the music 
+        alarmMusic.start(); 
+        closeMusicBtn.setVisibility(0); 
+      } 
+    }; 
+    countDownTimer.start(); 
+    startBtn.setText("pause the Countdown"); 
+    isBrewing = true; 
+
+  } 
+  
+  /** 
+   * resume the Countdown 
+   */
+  public void stopBrew() { 
+    if (countDownTimer != null) { 
+      countDownTimer.cancel(); 
+    } 
+   
+    brewTime=Integer.valueOf(aaa).intValue();
+    isBrewing = false; 
+    startBtn.setText("resume the Countdown"); 
+  } 
+  
+  @Override
+  public void onClick(View v) { 
+    if (v == addTimeBtn) { 
+      setBrewTime(brewTime + 1); 
+    } else if (v == decreaseTimeBtn) { 
+      setBrewTime(brewTime - 1); 
+    } else if (v == startBtn) { 
+      if (isBrewing) { 
+        stopBrew(); 
+      } else { 
+        startBrew(); 
+      } 
+    } else if (v == closeMusicBtn) { 
+      if (alarmMusic != null) { 
+        alarmMusic.stop(); 
+        closeMusicBtn.setVisibility(8); 
+      } 
+    } 
+  } 
+} 
